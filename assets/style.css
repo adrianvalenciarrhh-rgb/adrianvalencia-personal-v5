@@ -1063,3 +1063,10 @@ a.pi:hover img{transform:scale(1.04)}
 @media (max-width:820px){.pd-s{grid-template-columns:1fr}.pd-hero-s,.pd-strip{grid-column:1/-1}.pd-strip>li{flex-basis:calc(var(--ar) * 130px)}}
 /* r7 — en móvil «COLLABORATOR» se partía (COLLABORATO / R): títulos de proyecto a 15.5vw por debajo de 600px */
 @media (max-width:600px){.pg-proj .ph-h{font-size:15.5vw}}
+/* r8 — más aire en el texto de las 4 páginas de proyecto: interlineado 1.8, párrafos a 1.25em, bloques (párrafo solo en negrita) con 2.6em antes, medida 60ch */
+.prose-pd{line-height:1.8;max-width:60ch}
+.prose-pd p+p{margin-top:1.25em}
+.prose-pd p.p-s{margin-top:2.6em}
+.prose-pd>p.p-s:first-child{margin-top:0}
+.prose-pd p.p-s+p{margin-top:1em}
+.prose-pd .gap{height:2em}
