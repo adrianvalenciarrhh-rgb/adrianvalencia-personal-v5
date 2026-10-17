@@ -1070,3 +1070,16 @@ a.pi:hover img{transform:scale(1.04)}
 .prose-pd>p.p-s:first-child{margin-top:0}
 .prose-pd p.p-s+p{margin-top:1em}
 .prose-pd .gap{height:2em}
+/* r9 — pausas largas del texto (3+ líneas vacías del original) y figura intercalada en la columna de la principal; tira de Mi vida en una fila también a 360 px */
+.prose-pd .gap-l{height:4em}
+.pd-g .pd-in{grid-column:4/span 7;margin:clamp(40px,5vw,80px) 0}
+.pd-in img{display:block;width:100%;height:auto}
+@media (max-width:1100px){.pd-g .pd-in{grid-column:4/span 9}}
+@media (max-width:820px){.pd-g .pd-in{grid-column:1/-1;margin:40px 0}.pd-strip[data-p="mi-vida"]>li{flex-basis:calc(var(--ar) * 100px)}}
+/* r9b — Mi vida: principal vertical contenida (≤640 px de ancho y ≤86vh de alto, sin recorte); intercalada pequeña (≤460 px, nunca por encima de 1x); tira de 2 limitada a la columna del texto */
+.pd-hero-v img{width:min(100%,640px,calc(86vh * var(--ar)))}
+.pd-g .pd-in-s img{width:min(100%,460px)}
+.pd-strip-c{grid-column:4/span 7}
+@media (max-width:1100px){.pd-strip-c{grid-column:4/span 9}}
+@media (max-width:820px){.pd-strip-c{grid-column:1/-1}}
+@media (max-width:600px){.pd-g .pd-in-s img{width:100%}}
