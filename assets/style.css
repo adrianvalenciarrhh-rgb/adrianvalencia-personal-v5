@@ -1048,3 +1048,18 @@ a.pi:hover img{transform:scale(1.04)}
  .rz-k{grid-template-columns:44px 20px minmax(0,1fr);padding:8px 0}.rz-th{width:44px;height:44px}
 }
 @media (prefers-reduced-motion:reduce){.rz-ci,.rz-k::after,.rz-kt,.rz-kt b,.rz-th img.g{transition:none}}
+/* r7 — Music Content Collaborator: imágenes reducidas. Principal en la columna del texto; tira de miniaturas a igual altura */
+.pd-s{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:var(--gap)}
+.pd-hero-s{grid-column:4/span 7}
+.pd-hero-s img{width:100%;height:auto;max-height:none;object-fit:initial}
+.pd-s2{margin-top:clamp(64px,8vw,128px)}
+.pd-strip{grid-column:4/-1;display:flex;flex-wrap:wrap;align-items:flex-start;gap:var(--gap);list-style:none;margin:0;padding:0}
+.pd-strip>li{flex:var(--ar) 1 calc(var(--ar) * 150px);min-width:0}
+.pd-strip img{display:block;width:100%;height:auto}
+.pd-strip figcaption{display:flex;justify-content:space-between;gap:10px;margin-top:10px;color:var(--mute)}
+.pd-strip figcaption .num{color:var(--mute)}
+.pd-cr{font:400 10.5px/1.4 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--mute);text-align:right}
+@media (max-width:1100px){.pd-hero-s{grid-column:4/span 9}}
+@media (max-width:820px){.pd-s{grid-template-columns:1fr}.pd-hero-s,.pd-strip{grid-column:1/-1}.pd-strip>li{flex-basis:calc(var(--ar) * 130px)}}
+/* r7 — en móvil «COLLABORATOR» se partía (COLLABORATO / R): títulos de proyecto a 15.5vw por debajo de 600px */
+@media (max-width:600px){.pg-proj .ph-h{font-size:15.5vw}}
