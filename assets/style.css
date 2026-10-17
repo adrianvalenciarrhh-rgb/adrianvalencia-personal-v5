@@ -1150,3 +1150,13 @@ a.cx1-v:hover{color:var(--acc)}.cx1-v .ar{width:.5em;height:.5em;color:var(--acc
  .faq .faq-img{max-width:none;width:min(100%,340px,calc((100svh - 340px)*.8))}
  .faq .faq-list{grid-column:7/span 6}
 }
+/* r16 · Cultura: espalda (ci3), Vagabond (ci2) y café (ci4) bajan un poco; siguen pisando la parte baja del título y tapan menos.
+   Escritorio: el escenario deja asomar por abajo (overflow-y visible) sin llegar al texto; los ancestros siguen con overflow-x:clip. */
+@media (min-width:821px){
+ .cult-st{overflow-x:clip;overflow-y:visible}
+ .ci2{top:calc(46% + var(--d2))}.ci3{bottom:calc(3% - var(--d3))}.ci4{bottom:calc(6% - var(--d4))}
+ .cult{--d2:clamp(14px,min(3vw,3svh),40px);--d3:clamp(10px,min(1.6vw,2.4svh),24px);--d4:clamp(10px,min(3vw - 12px,4svh),44px)}
+ .cult .cult-p{position:relative;z-index:2}
+}
+/* Móvil/tablet vertical: espalda y café ya no tocan el título; sólo Vagabond lo pisa → baja 3vw y sigue pisando la franja inferior */
+@media (max-width:820px){.ci2{top:63vw}}
