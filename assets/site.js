@@ -156,4 +156,26 @@ $$('[data-ks]').forEach(ks=>{const tb=ks.querySelector('.ks-tb'),lp=ks.querySele
  if(FINE.matches)fs.forEach(f=>{const im=f.querySelector('.ks-im');f.addEventListener('pointermove',e=>{if(e.pointerType!=='mouse')return;const r=im.getBoundingClientRect();const rx=Math.min(1,Math.max(0,(e.clientX-r.left)/r.width)),ry=Math.min(1,Math.max(0,(e.clientY-r.top)/r.height));if(li.getAttribute('src')!==f.dataset.big)li.src=f.dataset.big;ks.classList.add('hov');place(im,e.clientX,e.clientY,rx,ry)})});
  tb.addEventListener('pointerleave',()=>{ks.classList.remove('hov');rest()});
  addEventListener('resize',rest);d.fonts&&d.fonts.ready.then(rest);addEventListener('load',rest);rest();});
+/* R — Resonancia definitiva: el título elegido suena a su propio volumen (ajustado al hueco) y deja tres ecos que se apagan.
+   Física: muelle subamortiguado analítico (ζ .58, 1,7 Hz) con retardo entre ecos de 70 ms, como un delay. Sólo transform/opacity. */
+$$('[data-rz]').forEach(rz=>{const tb=rz.querySelector('.rz-t'),Ls=$$('.rz-l',tb),M=Ls[Ls.length-1],E=Ls.slice(0,-1).reverse(),cb=rz.querySelector('.rz-cb'),cis=$$('.rz-ci',rz),frs=$$('.rz-fr',rz).reverse();
+ const cx=d.createElement('canvas').getContext('2d'),LH=.86,EK=.1,OP=[.5,.3,.7],FD=14;let fs=100,raf=0,cur=rz.querySelector('.pk[aria-pressed="true"]'),fi=0;
+ const wd=s=>cx.measureText(s).width/100;
+ const fit=t=>{const W=tb.clientWidth,H=tb.clientHeight;if(!W||!H)return;cx.font='100px Anton, "Arial Narrow", sans-serif';const T=t.toUpperCase(),w=T.split(' '),c=[[T]];
+  const split=(ws,n)=>{if(n===1)return[[ws.join(' ')]];const out=[];for(let i=1;i<ws.length;i++)for(const r of split(ws.slice(i),n-1))out.push([ws.slice(0,i).join(' '),...r]);return out};
+  for(let n=2;n<=Math.min(3,w.length);n++)c.push(...split(w,n));
+  let b=null;for(const l of c){const s=Math.min(W*.995/Math.max(...l.map(wd)),H/(l.length*LH+E.length*EK));if(!b||s>b.s+.5)b={l,s}}
+  fs=b.s;tb.style.setProperty('--fs',fs.toFixed(1)+'px');const q=b.l.map(x=>x.replace(/[&<>]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;'})[m]));M.innerHTML=q.join('<br>');E.forEach(e=>e.innerHTML=q.map((x,i)=>i?'<span class="rz-x">'+x+'</span>':x).join('<br>'))};
+ const sp=t=>{if(t<=0)return 0;const z=.58,w=2*Math.PI*1.7,wd2=w*Math.sqrt(1-z*z);return 1-Math.exp(-z*w*t)*(Math.cos(wd2*t)+z*w/wd2*Math.sin(wd2*t))};
+ const lin=(t,dur)=>Math.max(0,Math.min(1,t/dur));
+ const pose=t=>{const fz=fs;M.style.transform=`translate3d(0,${((1-sp(t))*.16*fz).toFixed(2)}px,0)`;M.style.opacity=lin(t,.12).toFixed(3);
+  E.forEach((e,k)=>{const tk=t-.07*(k+1),p=sp(tk);e.style.transform=`translate3d(0,${(-(k+1)*EK*fz*p).toFixed(2)}px,0)`;e.style.opacity=(OP[k]*lin(tk,.18)*(1-.45*lin(tk-.5,.9))).toFixed(3)});
+  frs.forEach((f,k)=>{const tk=t-.07*(k+1),p=sp(tk);f.style.transform=`translate3d(0,${(-(k+1)*FD*p).toFixed(2)}px,0)`;f.style.opacity=(lin(tk,.18)*(1-.4*lin(tk-.5,.9))).toFixed(3)});
+  cb.style.transform=`scale(${(.955+.045*sp(t)).toFixed(4)})`};
+ const strike=()=>{cancelAnimationFrame(raf);if(rm){pose(9);return}const t0=performance.now();const go=n=>{const t=(n-t0)/1000;pose(t);if(t<2.2)raf=requestAnimationFrame(go);else pose(9)};raf=requestAnimationFrame(go)};
+ const swap=src=>{if(rm){cis[fi].src=src;return}const nx=1-fi;cis[nx].src=src;const show=()=>{cis[nx].classList.add('on');cis[fi].classList.remove('on');fi=nx};cis[nx].decode?cis[nx].decode().then(show,show):show()};
+ rz.addEventListener('pick',e=>{const b=e.detail.b;cur=b;fit(b.dataset.t);swap(b.dataset.src);strike()});fit(cur.dataset.t);
+ const re=()=>{if(cur)fit(cur.dataset.t);if(!raf||rm)pose(9)};
+ let rt=0;addEventListener('resize',()=>{cancelAnimationFrame(rt);rt=requestAnimationFrame(re)});d.fonts&&d.fonts.ready.then(re);
+ if(rm||!('IntersectionObserver' in W))pose(9);else{pose(0);new IntersectionObserver((es,o)=>{if(es[0].isIntersecting){o.disconnect();strike()}},{threshold:.45}).observe(tb)}});
 })();
