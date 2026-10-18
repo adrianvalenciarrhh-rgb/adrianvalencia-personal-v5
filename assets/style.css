@@ -1181,3 +1181,16 @@ a.cx1-v:hover{color:var(--acc)}.cx1-v .ar{width:.5em;height:.5em;color:var(--acc
  .ps-all{justify-self:start}
 }
 @media (max-width:400px){.ps-l{gap:8px}.ps img{height:68px}}
+/* r18 · Cultura sin choques entre imágenes (≥821 px). Causa: en pantallas anchas y bajas el escenario (100svh − cabecera, título y párrafo) es más bajo
+   que la suma de las dos imágenes de cada columna (Luffy+espalda a la izquierda, gimnasio+café a la derecha), y el paralaje las movía en sentidos opuestos.
+   Ahora el escenario es contenedor: cada imagen limita su ALTO a una franja del escenario (cqh) con 32 px libres entre las de la misma columna
+   (24 px de margen para el paralaje, que se limita a ±12 px en site.js) y sólo asoma --hang por debajo, para dejar ≥24 px hasta el párrafo. */
+@media (min-width:821px){
+ .cult-st{container-type:size}
+ .cult{--hang:max(0px,clamp(20px,3vw,40px) - 16px)}
+ .ci0{--w:min(clamp(100px,min(14vw,24svh),230px),34cqh)}
+ .ci3{--w:min(clamp(130px,min(19vw,34svh),320px),calc((60cqh + var(--hang) - 32px)/1.17));bottom:calc(-1*var(--hang))}
+ .ci1{--w:min(clamp(110px,min(15vw,26svh),250px),calc(52cqh/1.29))}
+ .ci4{--w:min(clamp(100px,min(13vw,23svh),220px),calc((45cqh + var(--hang) - 32px)/1.2));bottom:calc(-1*var(--hang))}
+ .ci2{--w:min(clamp(130px,min(18vw,32svh),300px),calc((54cqh - var(--d2) + var(--hang))/.98))}
+}

@@ -61,7 +61,7 @@ function frame(now){sweep(now);const dt=Math.min(64,now-last)/1000;last=now;cons
  if(hd){hd.classList.toggle('solid',y>40);hd.classList.toggle('hide',dy>2&&y>320&&menu&&menu.hidden);if(dy<-2)hd.classList.remove('hide');}
  if(Math.abs(dy)>0.5)dir=dy>0?1:-1;vel+=(Math.min(Math.abs(dy),120)-vel)*.12;ly=y;
  if(!rm){mqs.forEach(m=>{if(!m.vis||!m.w)return;m.x-=(m.s*(1+vel*.09))*dt*dir;if(m.x<=-m.w)m.x+=m.w;if(m.x>0)m.x-=m.w;m.t.style.transform=`translate3d(${m.x.toFixed(2)}px,0,0)`});
-  if(innerWidth>820)par.forEach(p=>{const r=p.el.getBoundingClientRect();const c=(r.top+r.height/2-innerHeight/2);p.el.style.transform=`translate3d(0,${(c*p.f).toFixed(1)}px,0)`});
+  if(innerWidth>820)par.forEach(p=>{const r=p.el.getBoundingClientRect();const c=(r.top+r.height/2-innerHeight/2);p.el.style.transform=`translate3d(0,${Math.max(-12,Math.min(12,c*p.f)).toFixed(1)}px,0)`});
   if(pv&&pv.classList.contains('on')){px+=(tx-px)*.16;py+=(ty-py)*.16;const rot=Math.max(-8,Math.min(8,(tx-px)*.08));pv.style.transform=`translate(${px.toFixed(1)}px,${py.toFixed(1)}px) translate(-50%,-50%) rotate(${rot.toFixed(2)}deg)`;}}
  else if(pv&&pv.classList.contains('on'))pv.style.transform=`translate(${tx}px,${ty}px) translate(-50%,-50%)`;
  if(words.length){const r=mf.getBoundingClientRect();const p=Math.min(1,Math.max(0,(innerHeight*.82-r.top)/(r.height+innerHeight*.3)));const n=rm?words.length:Math.round(p*words.length*1.05);words.forEach((w,i)=>w.classList.toggle('on',i<n));}
